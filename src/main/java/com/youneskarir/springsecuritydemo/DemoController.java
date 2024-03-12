@@ -1,4 +1,4 @@
-package com.youneskarir.springsecuritydemo;
+/*package com.youneskarir.springsecuritydemo;
 
 
 import org.springframework.stereotype.Controller;
@@ -31,3 +31,4 @@ public class DemoController {
         return "<h1>spring security test demo THREE</h1>";
     }
 }
+*/

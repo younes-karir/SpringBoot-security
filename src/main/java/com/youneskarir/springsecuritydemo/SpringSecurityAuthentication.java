@@ -1,4 +1,4 @@
-package com.youneskarir.springsecuritydemo;
+/*package com.youneskarir.springsecuritydemo;
 
 
 import org.springframework.context.annotation.Bean;
@@ -43,3 +43,4 @@ public class SpringSecurityAuthentication {
     
     
 }
+*/
