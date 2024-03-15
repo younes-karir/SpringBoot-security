@@ -3,7 +3,6 @@ package com.youneskarir.springsecuritydemo.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,7 +18,7 @@ import java.util.function.Function;
 public class JwtService {
     
     private static final String SECRET = "763151654a285942553b587d5f5753445b2f66426b285748414b575149";
-    
+        
     public String extractUsername(String token){
         return extractClaim(token, Claims::getSubject);
     }
@@ -38,7 +37,6 @@ public class JwtService {
     public String generateToken(UserDetails details){
         return generateToken(new HashMap<>() ,details);
     }
-
     
     public boolean isTokenValid(String token, UserDetails userDetails){
         final String username = extractUsername(token);
@@ -46,9 +44,12 @@ public class JwtService {
     }
 
     private boolean isTokenExpired(String token) {
-        return false;
+        return extractExpiration(token).before(new Date());
     }
 
+    private Date extractExpiration(String token) {
+        return extractClaim(token,Claims::getExpiration);
+    }
 
     public <T> T extractClaim(String token, Function<Claims,T> claimResolver){
         final Claims claims = extractAllClaims(token);
@@ -56,7 +57,11 @@ public class JwtService {
     }
     
     private Claims extractAllClaims(String token){
-        return Jwts.parser().verifyWith(getSignedKey()).build().parseSignedClaims(token).getPayload();
+        return Jwts
+                .parser()
+                .verifyWith(getSignedKey())
+                .build().parseSignedClaims(token)
+                .getPayload();
     }
 
     private SecretKey getSignedKey() {
