@@ -18,10 +18,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-
     private final JwtAuthenticationFilter JwtAuthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
-
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -30,11 +28,9 @@ public class SecurityConfig {
                         .requestMatchers("").authenticated()
                         .requestMatchers("").permitAll()
                 );
-        http.sessionManagement((session) -> session
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        http.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.authenticationProvider(authenticationProvider);
         http.addFilterBefore(JwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-        
         return http.build();
     }
 }
