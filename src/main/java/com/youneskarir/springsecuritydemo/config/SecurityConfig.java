@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -33,6 +34,12 @@ public class SecurityConfig {
         http.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.authenticationProvider(authenticationProvider);
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.logout(log-> {
+                    log.clearAuthentication(true)
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"))
+                    .logoutSuccessUrl("/auth/login?logout")
+                    .permitAll();
+        });
         return http.build();
     }
 
