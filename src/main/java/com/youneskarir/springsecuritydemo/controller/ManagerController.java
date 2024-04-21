@@ -4,7 +4,7 @@ package com.youneskarir.springsecuritydemo.controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1/manager")
+@RequestMapping("api/v1/management")
 public class ManagerController {
 
 
