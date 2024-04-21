@@ -20,6 +20,7 @@ public class ExceptionHandle {
     
     
     @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String,String> handleValidation(MethodArgumentNotValidException exception){
         Map<String,String> errors = new HashMap<>();
         exception.getBindingResult().getFieldErrors().forEach(
