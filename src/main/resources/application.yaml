@@ -7,7 +7,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     generate-ddl: true
     properties:
       hibernate:
@@ -19,7 +19,7 @@ server:
   port: 1
   
 
-application:
+application:   
   security:
     jwt:
       secret-key: 763151654a285942553b587d5f5753445b2f66426b285748414b575149
