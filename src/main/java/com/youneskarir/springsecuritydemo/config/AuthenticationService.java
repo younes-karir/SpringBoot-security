@@ -2,6 +2,7 @@ package com.youneskarir.springsecuritydemo.config;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.youneskarir.springsecuritydemo.advice.custom.ElementExistException;
 import com.youneskarir.springsecuritydemo.dto.AuthenticationRequest;
 import com.youneskarir.springsecuritydemo.dto.AuthenticationResponse;
 import com.youneskarir.springsecuritydemo.dto.RegisterRequest;
@@ -13,6 +14,7 @@ import com.youneskarir.springsecuritydemo.token.TokenType;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,6 +39,8 @@ public class AuthenticationService {
     private final TokenRepository tokenRepository;
     
     public AuthenticationResponse register(RegisterRequest request) {
+        if(userRepository.findByEmail(request.getEmail()).isPresent()) 
+            throw new ElementExistException("email already used");
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
