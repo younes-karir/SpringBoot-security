@@ -51,13 +51,7 @@ public class ExceptionHandle {
     }
     
     
-    @ExceptionHandler({
-            BadCredentialsException.class,
-            AccountStatusException.class,
-            AccessDeniedException.class,
-            SignatureException.class,
-            ExpiredJwtException.class
-    })
+    @ExceptionHandler(Exception.class)
     public ProblemDetail handleSecurityException(Exception exception) {
         ProblemDetail errorDetail = null;
 
